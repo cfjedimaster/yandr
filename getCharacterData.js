@@ -49,7 +49,7 @@ characters = characters.filter(c => {
 	return true;
 });
 
-console.log('About to parse '+characters.length+' characters.\n\n');
+console.log('About to parse '+characters.length+' characters.');
 
 let promises = [];
 
@@ -70,7 +70,9 @@ Promise.all(promises).then(results => {
 		data.push(getParts(r));
 	});
 	
-	console.log(data);
+	//console.log(data);
+	fs.writeFileSync('./characterdata.json', JSON.stringify(data), 'UTF-8');
+	console.log('Done.');
 
 }).catch(e => {
 	console.log(e);
@@ -154,7 +156,7 @@ function getParts(s) {
 		});
 
 		//death_cause - just because
-		if(l.indexOf('| death_cause ') >= 0) {
+		if(l.indexOf('| death_cause ') >= 0 || l.indexOf('| death cause ') >= 0) {
 			let parts = l.split(/ = /);
 			if(parts[1]) result.causeOfDeath = parts[1];
 		}
